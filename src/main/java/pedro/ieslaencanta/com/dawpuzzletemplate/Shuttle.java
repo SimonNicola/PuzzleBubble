@@ -32,7 +32,7 @@ public class Shuttle {
         this.angle = 0.0f;
     }
 
-    public Bubble bubblesP(){
+    public Bubble bubblesCreate(){
         //creando un bubble
         Bubble bubble; 
         //Instanciando bubble
@@ -45,8 +45,11 @@ public class Shuttle {
     
     public Bubble shoot(){
         Bubble bubble = this.bubble;
-        this.nextBubble = bubblesP();
-        
+        this.bubble = this.nextBubble;
+        this.nextBubble = bubblesCreate();
+        this.bubble.setAngulo(180+this.angle);
+        this.bubble.setPosicion(center);
+        return bubble;
     }
     
     
@@ -85,6 +88,4 @@ public class Shuttle {
             gc.strokeText(this.angle + "º x:" + this.center.getX() + "y:" + this.center.getY(), (this.center.getX()) * Game.SCALE, (this.center.getY()) * Game.SCALE);
         }
     }
-
-    
 }
