@@ -228,7 +228,16 @@ public class Board implements IKeyListener {
             case ENTER:
                 break;
             case SPACE:
-                this.shuttle.shoot();
+                   this.ball = new Bubble();
+                //se coloca el tipo de forma aleatorioa
+                this.ball.setBalltype(BubbleType.values()[(int) (Math.random() * BubbleType.values().length)]);
+                //se pone la posición (centro) y ángulo aleatorio
+                this.ball.init(new Point2D(
+                        (this.game_zone.getMaxX() - this.game_zone.getWidth() / 2),
+                        (this.game_zone.getMaxY() - 18)
+                ), (float) (Math.random() * 360));
+                this.ball.play();
+                this.paintBackground();
                 break;
             case P:
 

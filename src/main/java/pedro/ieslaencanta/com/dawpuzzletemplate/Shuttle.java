@@ -14,7 +14,7 @@ import javafx.scene.paint.Color;
  */
 public class Shuttle {
 
-    private float angle;
+    private float angle=90.0f;
     private Bubble bubble;
     private Bubble nextBubble;
     private static float angelInc = 180.0f/126.0f;
@@ -31,26 +31,32 @@ public class Shuttle {
         this.nextBubble = nextBubble;
         this.angle = 0.0f;
     }
-
+    //bubble tiene dos constructores uno por defecto y uno sobrecargado
+    //sobre cargado coordenadas y el tipo de
     public Bubble bubblesCreate(){
         //creando un bubble
         Bubble bubble; 
-        //Instanciando bubble
-        bubble = new Bubble(); 
+        //Instanciando bubble,usando el constructor por defecto
+         bubble = new Bubble(50,50,BubbleType.BLUE); 
         //Dando un tipo a la bala
-        this.bubble.setBalltype(BubbleType.values()[(int) (Math.random() * BubbleType.values().length)]);
+        //this.bubble.setBalltype(BubbleType.values()[(int) (Math.random() * BubbleType.values().length)]);
         //Devuelvo la bala
+        bubble.setAngulo(180+this.angle);
+        bubble.setPosicion(center);
         return  bubble;
     }
     
-    public Bubble shoot(){
+    //instanciar un bubble, B ubble(double x, double y, BubbleType balltype)
+    
+    /* public Bubble shoot(){
+        
         Bubble bubble = this.bubble;
         this.bubble = this.nextBubble;
         this.nextBubble = bubblesCreate();
         this.bubble.setAngulo(180+this.angle);
         this.bubble.setPosicion(center);
         return bubble;
-    }
+    }*/
     
     
    public void moveRight(){
