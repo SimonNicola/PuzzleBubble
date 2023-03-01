@@ -22,11 +22,11 @@ public class Bubble {
     private boolean debug = false;
     private State estado;
     private Point2D posicion;
-    private float angulo = 0;
+    private float angulo;
     private float velocidad = 1f;
     private BubbleType balltype;
     public static int WIDTH = 16, HEIGHT = 16;
-
+ 
     public Bubble(double x, double y, BubbleType balltype) {
         this.estado = State.STOP;
         this.posicion = new Point2D(x, y);
@@ -36,7 +36,7 @@ public class Bubble {
     public Bubble() {
         this.estado = State.STOP;
     }
-
+   
     public void init(Point2D p, float angle) {
         int vertical_center = (int) (p.getX());
         int horizontal_center = (int) (p.getY());

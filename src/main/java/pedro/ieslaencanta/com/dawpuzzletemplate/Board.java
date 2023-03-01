@@ -23,8 +23,7 @@ import javafx.scene.paint.Color;
  */
 public class Board implements IKeyListener {
 
-    private Rectangle2D game_zone;
-
+    public  Rectangle2D game_zone;
     private GraphicsContext gc;
     private GraphicsContext bggc;
     private Dimension2D original_size;
@@ -133,6 +132,7 @@ public class Board implements IKeyListener {
         if(this.shuttle != null ){
             this.shuttle.paint(gc);
         }
+        this.shuttle.paintArrow(gc);
 
     }
 
@@ -221,26 +221,18 @@ public class Board implements IKeyListener {
         switch (code) {
             case LEFT:
                 this.left_press = false;
-                break;
+               break;
             case RIGHT:
                 this.right_press = false;
                 break;
             case ENTER:
                 break;
             case SPACE:
-                   this.ball = new Bubble();
-                //se coloca el tipo de forma aleatorioa
-                this.ball.setBalltype(BubbleType.values()[(int) (Math.random() * BubbleType.values().length)]);
-                //se pone la posición (centro) y ángulo aleatorio
-                this.ball.init(new Point2D(
-                        (this.game_zone.getMaxX() - this.game_zone.getWidth() / 2),
-                        (this.game_zone.getMaxY() - 18)
-                ), (float) (Math.random() * 360));
-                this.ball.play();
-                this.paintBackground();
+               this.ball= this.shuttle.shoot();
+               this.ball.play();
+               //this.paintBackground();
                 break;
             case P:
-
                 break;
             case E:
                 break;
