@@ -22,9 +22,9 @@ public class Shuttle {
     private static final float MIN_ANGLE = 0.0f;
     private static final float MAX_ANGLE = 180.0f;
     private boolean debug;
-    private int row = 3;
-    private int column = 975;
-    private int change = 65;
+    private int row = 1544;
+    private int column = 1; //977
+    private int change = 65; //
 
     public Shuttle(Point2D center) {
         this.center = center;
@@ -63,26 +63,75 @@ public class Shuttle {
 
     public void moveRight() {
         //incrementamos el angulo
-        this.angle -= angelInc;
-        this.column += this.column + 65;
-        //condicion de si es menor que el angulo minimo se iguala al angulo minimo
+
+        // this.column += this.change;
+        this.angle += angelInc;
+        /*if(this.column >= 977 && this.row < 1742){
+            this.row += 63 ;
+            this.column = 1;
+        } else if (this.row > 1741){ //mejorar luego
+            this.row = 1741;
+        }*/
+        //condicion de si es menor que el angulo minzzimo se iguala al angulo minimo
         if (this.angle < Shuttle.MIN_ANGLE) {
             this.angle = Shuttle.MIN_ANGLE;
         }
     }
 
     public void moveLeft() {
-        this.angle += angelInc;
-        this.column -= this.column - 65;
+        /*if(this.column >= 977){
+            this.row += 63 ;
+            this.column = 1;
+        } else if (this.row >= 1741){ //mejorar luego
+            this.row = 1741;
+            this.column = 977;
+        }
+        this.column += this.change;*/
+        this.angle -= angelInc;
         if (this.angle > Shuttle.MAX_ANGLE) {
             this.angle = Shuttle.MAX_ANGLE;
         }
 
     }
+    //mismos calculos pero al reves
+    public Point2D getArrowPosition() {
+        //dos variables
+        int f, c;
+        int posicion;
+        Point2D p = null;
+        if (this.angle <= 90) {
+            /*pocicion se iguala a la divison del angulo 
+            y el incremento
+            dando 62 */
+            posicion = (int) (this.angle / this.angelInc);
+            //cantidad de imagenes dividido en la pocicion
+            f = posicion / 16;
+            //cantidad de imagenes dando la resta en la pocicion
+            c = posicion % 16;
+            //creamos una nueavo Point2D
+            p = new Point2D(c, f);
+        }
+        return p;
+    }
 
     public void paint(GraphicsContext gc) {
         Resources r = Resources.getInstance();
-        gc.drawImage(r.getImage("spriters"),
+        Point2D p = this.getArrowPosition();
+        if (p != null) {
+            gc.drawImage(r.getImage("spriters"),
+                    //inicio de la posicion
+                    0 + -p.getX() * 65,
+                    1545 + p.getY() * 65,
+                    64,
+                    64,
+                    //dibujar en el lienzo
+                    (this.center.getX() - 64 / 2) * Game.SCALE,
+                    (this.center.getY() - 64 / 2) * Game.SCALE,
+                    64 * Game.SCALE,
+                    64 * Game.SCALE);
+        }
+        //fila y columna a partir de la
+        /* gc.drawImage(r.getImage("spriters"),
                 //inicio de la posicion
                 3,
                 1805,
@@ -92,7 +141,7 @@ public class Shuttle {
                 (this.center.getX() - 60 / 2) * Game.SCALE,
                 (this.center.getY() - 40 / 2) * Game.SCALE,
                 61 * Game.SCALE,
-                40 * Game.SCALE);
+                40 * Game.SCALE);*/
         if (this.bubble != null) {
             this.bubble.paint(gc);
         }
@@ -108,22 +157,22 @@ public class Shuttle {
 
     //pintando el arrow
     public void paintArrow(GraphicsContext gc) {
-        Resources r = Resources.getInstance();
-        gc.drawImage(r.getImage("arrow"),
+        /*Resources r = Resources.getInstance();
+        gc.drawImage(r.getImage("spriters"),
                 //inicio de la posicion
-                this.column,
+                 this.column,
                 this.row,
-                60,
-                64,
-                (this.center.getX() - 60 / 2) * Game.SCALE,
-                (this.center.getY() - 64 / 2) * Game.SCALE,
-                60 * Game.SCALE,
-                64 * Game.SCALE);
+                62,
+                61,
+                (this.center.getX() - 62 / 2) * Game.SCALE,
+                (this.center.getY() - 61 / 2) * Game.SCALE,
+                62 * Game.SCALE,
+                61 * Game.SCALE);
         //si se esta depurando
         if (this.debug) {
             gc.setStroke(Color.GREEN);
             gc.strokeText(this.angle + "º x:" + this.center.getX() + "y:" + this.center.getY(), (this.center.getX()) * Game.SCALE, (this.center.getY()) * Game.SCALE);
-        }
+        }*/
     }
 
     public float getAngle() {
