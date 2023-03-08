@@ -17,7 +17,7 @@ public class Shuttle {
     private float angle;
     private Bubble bubble;
     private Bubble nextBubble;
-    private static float angelInc = 180.0f / 126.0f;
+    private static float ANGELINC = 180.0f / 126.0f;
     private Point2D center;
     private static final float MIN_ANGLE = 0.0f;
     private static final float MAX_ANGLE = 180.0f;
@@ -45,6 +45,7 @@ public class Shuttle {
         //Devuelvo la bala
         return  bubble;
     } */
+    
     //instanciar un bubble, Bubble(double x, double y, BubbleType balltype)
     public Bubble shoot() {
         //asingnamos el bubble a la variable
@@ -62,10 +63,16 @@ public class Shuttle {
     }
 
     public void moveRight() {
-        //incrementamos el angulo
-
-        // this.column += this.change;
-        this.angle += angelInc;
+        /*incrementamos el angulo
+         si el angulo es menor que 90*/
+        if (this.angle > 180) {
+            //se incrementa para la izquierda
+          this.angle -= ANGELINC;
+           
+        } else {
+            //se incrementa para la derecha 
+          this.angle += ANGELINC;
+        } 
         /*if(this.column >= 977 && this.row < 1742){
             this.row += 63 ;
             this.column = 1;
@@ -86,13 +93,21 @@ public class Shuttle {
             this.row = 1741;
             this.column = 977;
         }
-        this.column += this.change;*/
-        this.angle -= angelInc;
+        this.column += this.change;
+        */
+        if (this.angle < 0) {
+         //se incrementa para la derecha
+            this.angle += ANGELINC;
+        } else {
+         //se incrementa para la izquierda  
+            this.angle -= ANGELINC;
+        }
         if (this.angle > Shuttle.MAX_ANGLE) {
             this.angle = Shuttle.MAX_ANGLE;
         }
 
     }
+
     //mismos calculos pero al reves
     public Point2D getArrowPosition() {
         //dos variables
@@ -103,12 +118,19 @@ public class Shuttle {
             /*pocicion se iguala a la divison del angulo 
             y el incremento
             dando 62 */
-            posicion = (int) (this.angle / this.angelInc);
+            posicion = (int) (this.angle / this.ANGELINC);
             //cantidad de imagenes dividido en la pocicion
             f = posicion / 16;
             //cantidad de imagenes dando la resta en la pocicion
             c = posicion % 16;
             //creamos una nueavo Point2D
+            p = new Point2D(c, f);
+        } else if (this.angle > 90) {
+            posicion = (int) (this.angle / this.ANGELINC);
+            f = posicion / 16;
+            c = posicion % 16;
+            f--;
+            c--;
             p = new Point2D(c, f);
         }
         return p;
@@ -117,10 +139,10 @@ public class Shuttle {
     public void paint(GraphicsContext gc) {
         Resources r = Resources.getInstance();
         Point2D p = this.getArrowPosition();
-        if (p != null) {
-            gc.drawImage(r.getImage("spriters"),
+        if (p != null && this.angle < 90) {
+                gc.drawImage(r.getImage("spriters"),
                     //inicio de la posicion
-                    0 + -p.getX() * 65,
+                    2 + p.getX() * 65,
                     1545 + p.getY() * 65,
                     64,
                     64,
@@ -128,6 +150,18 @@ public class Shuttle {
                     (this.center.getX() - 64 / 2) * Game.SCALE,
                     (this.center.getY() - 64 / 2) * Game.SCALE,
                     64 * Game.SCALE,
+                    64 * Game.SCALE);
+             } else if (p != null && this.angle > 90){ 
+            gc.drawImage(r.getImage("spriters"),
+                    //inicio de la posicion
+                    2 + p.getX() * 65,
+                    1545 + p.getY() * 65,
+                    64,
+                    64,
+                    //dibujar en el lienzo
+                    (this.center.getX() + 34) * Game.SCALE,
+                    (this.center.getY() - 64 / 2) * Game.SCALE,
+                    -64 * Game.SCALE,
                     64 * Game.SCALE);
         }
         //fila y columna a partir de la
