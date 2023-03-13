@@ -28,6 +28,7 @@ public class BallGrid {
     private BubbleType bubbleTypes[][];
     //define la fila de las burbujas
     private int lineBubble = 3;
+    private int mitad=Bubble.HEIGHT / 2;
 
     //constructor sobrecargado
     public BallGrid(int startx, int stary) {
@@ -54,18 +55,17 @@ public class BallGrid {
     }
 
     public boolean collision(Bubble b) {
-         boolean collision= false;
+       boolean collision=false;
+       /* comprueba si la parte de abajo del bubble, es menor o igual, a la parte del final del grid */
        
-           for(int j = 0; !collision;j++){
-                   if(grid[5][j].getPosicion() == b.getPosicion()){
-                       b.stop();
-                       b.setPosicion(grid[5][j].getPosicion());
-                       collision=true;
-                   }
-                }
-             return collision;
-        
-        }
+       if(b.getPosicion().getY() - mitad <= this.starty){
+           //si es asi devuelve true
+           collision=true;
+       }
+    
+    
+    return collision;  
+}
 
         /* boolean collision = false;
         for (int i = grid.length-1; i >= 0 && !collision; i--) {
