@@ -128,7 +128,7 @@ public class Board implements IKeyListener {
            if(this.grid.collision(ball))         
            this.ball = null;        
         }
-        this.grid.collision(ball);
+       
 
     }
 
@@ -236,6 +236,7 @@ public class Board implements IKeyListener {
             case ENTER:
                 break;
             case SPACE:
+               if(ball == null)
                this.ball= this.shuttle.shoot();
                this.ball.play();
                //this.paintBackground();
