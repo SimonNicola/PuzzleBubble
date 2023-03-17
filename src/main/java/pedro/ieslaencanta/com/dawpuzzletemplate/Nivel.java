@@ -19,17 +19,42 @@ public class Nivel {
     private int fila = 0;
     private int columnaX;
     private int columnaY;
-    private BallGrid grid;
+    public BallGrid grid;
     //para poder acceder a los tipos de burbujas
-    private BubbleType type;
+    public BubbleType type;
     //grid de burbjuas para los niveles
-    private Bubble nivelGrid[][];
+    public Bubble nivelGrid[][];
     //matriz de typos
-    public BubbleType[][] bubbleNivel = {
+   
+    
+     public BubbleType[][] nivelUno;
+    /* public BubbleType[][] nivelUno = {
+        //matriz de burbujas
+        {type.BLUE, type.GRAY, type.GREEN, type.PURPLE, type.ORANGE, type.PURPLE, type.GRAY, type.ORANGE},
+        {type.GREEN, type.ORANGE, type.ORANGE, type.GRAY, type.ORANGE, type.GRAY, type.PURPLE},
+        {type.GREEN, type.ORANGE, type.ORANGE, type.GRAY, type.ORANGE, type.GRAY, type.PURPLE,type.ORANGE}
+    };
+   
+    
+    public BubbleType[][] nivelTres = {
         //matriz de burbujas
         {type.BLUE, type.GRAY, type.GREEN, type.PURPLE, type.ORANGE, type.PURPLE, type.GRAY, type.ORANGE},
         {type.GREEN, type.ORANGE, type.ORANGE, type.GRAY, type.ORANGE, type.GRAY, type.PURPLE}
     };
+    
+    public BubbleType[][] nivelCuatro = {
+        //matriz de burbujas
+        {type.BLUE, type.GRAY, type.GREEN, type.PURPLE, type.ORANGE, type.PURPLE, type.GRAY, type.ORANGE},
+        {type.GREEN, type.ORANGE, type.ORANGE, type.GRAY, type.ORANGE, type.GRAY, type.PURPLE}
+    };
+    
+    public BubbleType[][] nivelCinco = {
+        //matriz de burbujas
+        {type.BLUE, type.GRAY, type.GREEN, type.PURPLE, type.ORANGE, type.PURPLE, type.GRAY, type.ORANGE},
+        {type.GREEN, type.ORANGE, type.ORANGE, type.GRAY, type.ORANGE, type.GRAY, type.PURPLE}
+    }; */
+    
+    
 
     public int[][] primerNivel = {
         //matriz de coordenadas de niveles
@@ -50,6 +75,11 @@ public class Nivel {
         columnaX = x;
         columnaY = y;
         //this.grid.fillGrid(bubbleNivel);
+        nivelUno = new BubbleType[][] {
+            //matriz de burbujas
+            {type.BLUE, type.GRAY, type.GREEN, type.PURPLE, type.ORANGE, type.PURPLE, type.GRAY, type.ORANGE},
+            {type.GREEN, type.ORANGE, type.ORANGE, type.GRAY, type.ORANGE, type.GRAY, type.PURPLE, type.ORANGE}
+        };
 
     }
 

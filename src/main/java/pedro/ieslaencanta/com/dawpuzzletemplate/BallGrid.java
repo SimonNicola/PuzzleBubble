@@ -14,6 +14,9 @@ import javafx.scene.canvas.GraphicsContext;
  */
 public class BallGrid {
 
+    //sumatorio para despalazar las burbujas
+    int sumatorioX = 8;
+    int sumatorioY = 8;
     //esquina top izquierda
     private int startx;
     //esquina top derecha   
@@ -34,6 +37,10 @@ public class BallGrid {
     //centro de la burbuja
     private int mh = Bubble.HEIGHT / 2;
     private int mw = Bubble.WIDTH / 2;
+    private Nivel nivel;
+    private BubbleType type;
+    
+   
 
     //constructor defecto
     public BallGrid() {
@@ -42,7 +49,7 @@ public class BallGrid {
     }
 
     //constructor sobrecargado
-    public BallGrid(int startx, int stary) {
+    public BallGrid(int startx, int stary, BubbleType[][] bubble) {
         //instanciamos
         this.startx = startx;
         this.starty = stary;
@@ -59,11 +66,30 @@ public class BallGrid {
                 this.grid[i] = new Bubble[7];
             }
         }
+        //instanciar burbujas
+        for (int i = 0; i < bubble.length; i++) {
+            for (int j = 0; j < bubble[i].length; j++) {
+
+                this.grid[i][j] = new Bubble(startx + sumatorioX, stary + sumatorioY, bubble[i][j]);
+                sumatorioX += 16;
+            }
+            if (i % 2 == 0) {
+                //si i es par tomara el valor de 16
+                sumatorioX = 16;
+            } else {
+                //si es impar tomara el valor de 8
+                sumatorioX = 8;
+            }
+            //añadimos a Y para bajar al siguiente nivel
+            sumatorioY += 16;
+        }
     }
 
-    public BallGrid(int startx, int stary, BubbleType bubbleTypes[][]) {
+    public BallGrid(int startx, int stary) {
         this.startx = startx;
         this.starty = stary;
+        //lo que cambiara de pocicion de startx, y stary;
+        int sumatorio = 8;
         this.grid = new Bubble[ROWS][];
         for (int i = 0; i < ROWS; i++) {
             //si es par
@@ -76,9 +102,12 @@ public class BallGrid {
                 this.grid[i] = new Bubble[7];
             }
         }
-        //para los niveles del juego en desuso, alomejor damos uso
-
-        //this.grid[0][0] = new Bubble(10, 10, bubbleTypes[0][0]);
+        /*for (int i = 0; i < bubbleTypes.length; i++) {
+            for (int j = 0; j < bubbleTypes[i].length; j++) {
+                this.grid[i][j] = new Bubble(startx + sumatorio, stary + 8, bubbleTypes[i][j]);
+                sumatorio += 8;
+            }
+        }*/
 
     }
 
@@ -172,16 +201,18 @@ public class BallGrid {
             }
         }
     }
-    
+
     //metodo utlizado en el nivel
-    public void fillGrid(BubbleType[][] bubble){
-        for(int i=0;i<bubble.length;i++){
-            for(int j=0;j<bubble[i].length;j++){
-                if(this.grid[i][j]!=null)
-                this.grid[i][j]= new Bubble(120, 30, bubble[i][j]);
+    public void fillGrid(BubbleType[][] bubble) {
+        for (int i = 0; i < bubble.length; i++) {
+            for (int j = 0; j < bubble[i].length; j++) {
+                if (this.grid[i][j] != null) {
+                    this.grid[i][j] = new Bubble(120, 30, bubble[i][j]);
+                }
             }
         }
     }
+
     //debugs balls inside the grid
     /*public String debugTest() {
         for (int i = 0; i < grid.length; i++) {

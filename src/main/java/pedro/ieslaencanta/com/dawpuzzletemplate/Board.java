@@ -42,6 +42,7 @@ public class Board implements IKeyListener {
      */
     public Board(Dimension2D original) {
         this.gc = null;
+
         this.game_zone = new Rectangle2D(95, 23, 128, 200);
         this.original_size = original;
         this.right_press = false;
@@ -50,8 +51,8 @@ public class Board implements IKeyListener {
                 (this.game_zone.getMaxX() - this.game_zone.getWidth() / 2),
                 (this.game_zone.getMaxY() - 20)
         ));
-        this.grid = new BallGrid((int) this.game_zone.getMinX(), (int) this.game_zone.getMinY());
         this.nivel = new Nivel(16, 17);
+        this.grid = new BallGrid((int) this.game_zone.getMinX(), (int) this.game_zone.getMinY(), this.nivel.nivelUno);
         this.debug = true;
 
     }
@@ -175,8 +176,6 @@ public class Board implements IKeyListener {
     /**
      * pintar el fonodo
      */
- 
-
     public void paintBackground() {
         Resources r = Resources.getInstance();
         Image fondos = r.getImage("fondos");
@@ -185,8 +184,8 @@ public class Board implements IKeyListener {
         //se dibujar el fondo
         this.bggc.drawImage(fondos,
                 //inicio de la posicion
-                x, 
-                y, 
+                x,
+                y,
                 this.original_size.getWidth(), //ancho de la imagen original
                 this.original_size.getHeight(), //alto de la imagen original
                 //dibujar en el liendozo
@@ -249,6 +248,7 @@ public class Board implements IKeyListener {
                 this.right_press = false;
                 break;
             case ENTER:
+
                 break;
             case SPACE:
                 if (ball == null) {
