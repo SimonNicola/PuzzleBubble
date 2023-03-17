@@ -37,11 +37,7 @@ public class BallGrid {
     //centro de la burbuja
     private int mh = Bubble.HEIGHT / 2;
     private int mw = Bubble.WIDTH / 2;
-    private Nivel nivel;
-    private BubbleType type;
     
-   
-
     //constructor defecto
     public BallGrid() {
         this.startx = -1;
@@ -49,8 +45,9 @@ public class BallGrid {
     }
 
     //constructor sobrecargado
-    public BallGrid(int startx, int stary, BubbleType[][] bubble) {
+    public BallGrid(int startx, int stary, BubbleType[][] b) {
         //instanciamos
+
         this.startx = startx;
         this.starty = stary;
         //instancimamos el grid con 12 filas
@@ -66,11 +63,11 @@ public class BallGrid {
                 this.grid[i] = new Bubble[7];
             }
         }
-        //instanciar burbujas
-        for (int i = 0; i < bubble.length; i++) {
-            for (int j = 0; j < bubble[i].length; j++) {
+        //instanciar burbujas, solo hara la primera instancia, luego se llamara a un metodo
+        for (int i = 0; i < b.length; i++) {
+            for (int j = 0; j < b[i].length; j++) {
 
-                this.grid[i][j] = new Bubble(startx + sumatorioX, stary + sumatorioY, bubble[i][j]);
+                this.grid[i][j] = new Bubble(startx + sumatorioX, stary + sumatorioY, b[i][j]);
                 sumatorioX += 16;
             }
             if (i % 2 == 0) {
@@ -84,31 +81,30 @@ public class BallGrid {
             sumatorioY += 16;
         }
     }
-
-    public BallGrid(int startx, int stary) {
-        this.startx = startx;
-        this.starty = stary;
-        //lo que cambiara de pocicion de startx, y stary;
-        int sumatorio = 8;
-        this.grid = new Bubble[ROWS][];
-        for (int i = 0; i < ROWS; i++) {
-            //si es par
+    
+   //casi igual que el constructor, pero recibe un parametro más, además de que añadimos un [] más al bubbletype, que correspondera con la fila  
+    public void pintarBurbuja(int startx, int stary, BubbleType[][][] b, int fila) {
+        int sumatorioX = 8; //sumatorios
+        int sumatorioY = 8; //
+        //defimos primero la fila de la que queremos pintar, la sacamos de un getter de nivel
+        for (int i = 0; i < b[fila].length; i++) {
+            for (int j = 0; j < b[fila][i].length; j++) {
+                //la pintamos en el comienzo más la mitad de la burbuja en la pocicion x, y en la pocicion y, e por final del bubbletype[viene de nivel][vamos corriendo][contiene los typos]
+                this.grid[i][j] = new Bubble(startx + sumatorioX, stary + sumatorioY, b[fila][i][j]);
+                //después de que se haya añadido una burbuja se suma 16, para ir a la siguiente pocicion
+                sumatorioX += 16;
+            }
+            //una vez listo con esa columna, comprobamos si i es par o impar, ya que las columnas van de 8 a 7, tambien es un reseteo
             if (i % 2 == 0) {
-                //creamos la fila con 9 columnas
-                this.grid[i] = new Bubble[8];
-                //si es impar
-            } else if (i % 2 != 0) {
-                //creamos la fila 8 
-                this.grid[i] = new Bubble[7];
+                //si i es par tomara el valor de 16
+                sumatorioX = 16;
+            } else {
+                //si es impar tomara el valor de 8
+                sumatorioX = 8;
             }
+            //añadimos a Y para bajar al siguiente nivel
+            sumatorioY += 16;
         }
-        /*for (int i = 0; i < bubbleTypes.length; i++) {
-            for (int j = 0; j < bubbleTypes[i].length; j++) {
-                this.grid[i][j] = new Bubble(startx + sumatorio, stary + 8, bubbleTypes[i][j]);
-                sumatorio += 8;
-            }
-        }*/
-
     }
 
     public boolean collision(Bubble b) {
@@ -130,8 +126,7 @@ public class BallGrid {
             b.setPosicion(
                     //creamos una nueva pocicion para b
                     new Point2D(
-                            /*pocicion cominezo de x, mas la columna actual, multiplicado por el width y añadimos la mitad del bubble para centrar
-                                                entender mejor lo que hace*/
+                            //pocicion cominezo de x, mas la columna actual, multiplicado por el width y añadimos la mitad del bubble para centrar                                              
                             this.startx + columna * Bubble.WIDTH + mw,
                             this.starty + fila * Bubble.HEIGHT + mh));
             //asignamos b a la fila y columna antes calculada
@@ -154,8 +149,7 @@ public class BallGrid {
                             if (fila % 2 == 0) {
                                 b.setPosicion(
                                         new Point2D(
-                                                /*pocicion cominezo de x, mas la columna actual, multiplicado por el width y añadimos la mitad del bubble para centrar
-                                                entender mejor lo que hace*/
+                                                //pocicion cominezo de x, mas la columna actual, multiplicado por el width y añadimos la mitad del bubble para centrar
                                                 this.startx + columna * Bubble.WIDTH + mw,
                                                 this.starty + fila * Bubble.HEIGHT + mh));
                             } else {
@@ -202,6 +196,16 @@ public class BallGrid {
         }
     }
 
+    public void vaciar() {
+        for (int i = 0; i < this.grid.length; i++) {
+            for (int j = 0; j < this.grid[i].length; j++) {
+                //si el grid es differente de null, no tiene sentido pintar los nullos, ya que son nullos
+                this.grid[i][j] = null;
+            }
+
+        }
+    }
+
     //metodo utlizado en el nivel
     public void fillGrid(BubbleType[][] bubble) {
         for (int i = 0; i < bubble.length; i++) {
@@ -229,5 +233,22 @@ public class BallGrid {
             System.out.println("this b has this pocicion on the gird " + "ball X pocicion " + b.getPosicion().getX() + " ball Y pocicion " + b.getPosicion().getY());
         }
     }
+    
+    //getters y setters
+    
+    public int getStartx() {
+        return startx;
+    }
 
+    public void setStartx(int startx) {
+        this.startx = startx;
+    }
+
+    public int getStarty() {
+        return starty;
+    }
+
+    public void setStarty(int starty) {
+        this.starty = starty;
+    }
 }

@@ -25,36 +25,54 @@ public class Nivel {
     //grid de burbjuas para los niveles
     public Bubble nivelGrid[][];
     //matriz de typos
-   
-    
-     public BubbleType[][] nivelUno;
-    /* public BubbleType[][] nivelUno = {
+
+    BubbleType[][][] nivelUno = {
         //matriz de burbujas
-        {type.BLUE, type.GRAY, type.GREEN, type.PURPLE, type.ORANGE, type.PURPLE, type.GRAY, type.ORANGE},
-        {type.GREEN, type.ORANGE, type.ORANGE, type.GRAY, type.ORANGE, type.GRAY, type.PURPLE},
-        {type.GREEN, type.ORANGE, type.ORANGE, type.GRAY, type.ORANGE, type.GRAY, type.PURPLE,type.ORANGE}
+        //nivel uno
+        {
+            {type.BLUE, type.BLUE, type.GREEN, type.BLUE, type.BLUE, type.BLUE, type.GRAY, type.BLUE},
+            {type.GREEN, type.ORANGE, type.BLUE, type.GRAY, type.ORANGE, type.GRAY, type.BLUE}
+        },
+        {
+            {type.BLUE, type.GRAY, type.GREEN, type.GRAY, type.GRAY, type.PURPLE, type.GRAY, type.ORANGE},
+            {type.GRAY, type.ORANGE, type.GRAY, type.GRAY, type.GRAY, type.GRAY, type.PURPLE},
+            {type.GREEN, type.GRAY, type.ORANGE, type.GRAY, type.GRAY, type.GRAY, type.GRAY, type.ORANGE}
+
+        },
+        //nivel dos
+        {
+            {type.BLUE, type.RED, type.GREEN, type.RED, type.GRAY, type.RED, type.GRAY, type.RED},
+            {type.GRAY, type.ORANGE, type.GRAY, type.GRAY, type.GRAY, type.GRAY, type.RED},
+            {type.RED, type.GRAY, type.RED, type.GRAY, type.GRAY, type.GRAY, type.GRAY, type.ORANGE},
+            {type.GRAY, type.ORANGE, type.GRAY, type.GRAY, type.GRAY, type.GRAY, type.RED}
+
+        },
+        //nivel tres
+        {
+            {type.BLUE, type.GRAY, type.GREEN, type.PURPLE, type.ORANGE, type.PURPLE, type.GRAY, type.ORANGE},
+            {type.GREEN, type.ORANGE, type.ORANGE, type.GRAY, type.ORANGE, type.GRAY, type.PURPLE}
+        },
+        //nivel cuatro
+        {
+            {type.BLUE, type.GRAY, type.GREEN, type.PURPLE, type.ORANGE, type.PURPLE, type.GRAY, type.ORANGE},
+            {type.GREEN, type.ORANGE, type.ORANGE, type.GRAY, type.ORANGE, type.GRAY, type.PURPLE}
+        },
+        //nivel cinco
+        {
+            {type.BLUE, type.GRAY, type.GREEN, type.PURPLE, type.ORANGE, type.PURPLE, type.GRAY, type.ORANGE},
+            {type.GREEN, type.ORANGE, type.ORANGE, type.GRAY, type.ORANGE, type.GRAY, type.PURPLE}
+        },
+        //nivel seis
+        {
+            {type.BLUE, type.GRAY, type.GREEN, type.PURPLE, type.ORANGE, type.PURPLE, type.GRAY, type.ORANGE},
+            {type.GREEN, type.ORANGE, type.ORANGE, type.GRAY, type.ORANGE, type.GRAY, type.PURPLE}
+        },
+        //nivel siete
+        {
+            {type.BLUE, type.GRAY, type.GREEN, type.PURPLE, type.ORANGE, type.PURPLE, type.GRAY, type.ORANGE},
+            {type.GREEN, type.ORANGE, type.ORANGE, type.GRAY, type.ORANGE, type.GRAY, type.PURPLE}
+        }
     };
-   
-    
-    public BubbleType[][] nivelTres = {
-        //matriz de burbujas
-        {type.BLUE, type.GRAY, type.GREEN, type.PURPLE, type.ORANGE, type.PURPLE, type.GRAY, type.ORANGE},
-        {type.GREEN, type.ORANGE, type.ORANGE, type.GRAY, type.ORANGE, type.GRAY, type.PURPLE}
-    };
-    
-    public BubbleType[][] nivelCuatro = {
-        //matriz de burbujas
-        {type.BLUE, type.GRAY, type.GREEN, type.PURPLE, type.ORANGE, type.PURPLE, type.GRAY, type.ORANGE},
-        {type.GREEN, type.ORANGE, type.ORANGE, type.GRAY, type.ORANGE, type.GRAY, type.PURPLE}
-    };
-    
-    public BubbleType[][] nivelCinco = {
-        //matriz de burbujas
-        {type.BLUE, type.GRAY, type.GREEN, type.PURPLE, type.ORANGE, type.PURPLE, type.GRAY, type.ORANGE},
-        {type.GREEN, type.ORANGE, type.ORANGE, type.GRAY, type.ORANGE, type.GRAY, type.PURPLE}
-    }; */
-    
-    
 
     public int[][] primerNivel = {
         //matriz de coordenadas de niveles
@@ -71,17 +89,22 @@ public class Nivel {
         {1000, 16}
     };
 
-    public Nivel(int x, int y) {
+    public Nivel(int x, int y, int fila) {
         columnaX = x;
         columnaY = y;
+        this.fila = fila;
         //this.grid.fillGrid(bubbleNivel);
-        nivelUno = new BubbleType[][] {
-            //matriz de burbujas
-            {type.BLUE, type.GRAY, type.GREEN, type.PURPLE, type.ORANGE, type.PURPLE, type.GRAY, type.ORANGE},
-            {type.GREEN, type.ORANGE, type.ORANGE, type.GRAY, type.ORANGE, type.GRAY, type.PURPLE, type.ORANGE}
-        };
 
     }
+
+    public Nivel() {
+        columnaX = -1;
+        columnaY = -1;
+        this.fila = -1;
+        //this.grid.fillGrid(bubbleNivel);
+
+    }
+
 
     public void aumentoFila() {
         if (this.fila < 9) {

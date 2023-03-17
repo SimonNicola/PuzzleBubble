@@ -51,8 +51,9 @@ public class Board implements IKeyListener {
                 (this.game_zone.getMaxX() - this.game_zone.getWidth() / 2),
                 (this.game_zone.getMaxY() - 20)
         ));
-        this.nivel = new Nivel(16, 17);
-        this.grid = new BallGrid((int) this.game_zone.getMinX(), (int) this.game_zone.getMinY(), this.nivel.nivelUno);
+        this.nivel = new Nivel(16, 17,2);
+        //instanciamos el grid, a partir de la zone del juego x, e y, además decimos que nivel de burbujas vamos a utilizar
+        this.grid = new BallGrid((int) this.game_zone.getMinX(), (int) this.game_zone.getMinY(),this.nivel.nivelUno[this.nivel.getFila()]);
         this.debug = true;
 
     }
@@ -128,7 +129,9 @@ public class Board implements IKeyListener {
             this.ball.move(this.game_zone);
         }
         if (this.ball != null && this.grid != null) {
+            //si hay una collision, devuelve true
             if (this.grid.collision(ball)) {
+                //la balla se elemina
                 this.ball = null;
             }
         }
@@ -137,22 +140,24 @@ public class Board implements IKeyListener {
 
     private void render() {
         if (this.ball != null && this.ball.getBalltype() != null) {
+            //si la bola y el tipo de la bola es differnte de null lo pinta
             this.ball.paint(gc);
         }
         if (this.shuttle != null) {
+            //si shuttle es differente de null, llama al metodo paint
             this.shuttle.paint(gc);
         }
         if (this.shuttle != null) {
+            //si shuttle es differente de null, llama al metodo paint
             this.shuttle.paintArrow(gc);
         }
         if (this.grid != null) {
+            //si grid es differente de null, llama al metodo paint
             this.grid.paint(gc);
         }
+        if(this.ball != null)
         this.grid.debugTest(ball);
-        if (this.ball != null && this.grid != null) {
-            //  this.grid.debugTest(ball);
-        }
-
+      
     }
 
     private void process_input() {
@@ -179,6 +184,9 @@ public class Board implements IKeyListener {
     public void paintBackground() {
         Resources r = Resources.getInstance();
         Image fondos = r.getImage("fondos");
+        /*obtiene el nivel apartir de una matriz de enteros con las coordenadas a la siguiente background, 
+        fila modifica la fila de la matriz, cada pocicion tiene dos coordenadas, coorespondiendo a un fondo
+        */
         int x = nivel.primerNivel[this.nivel.getFila()][0];
         int y = nivel.primerNivel[this.nivel.getFila()][1];
         //se dibujar el fondo
@@ -252,18 +260,29 @@ public class Board implements IKeyListener {
                 break;
             case SPACE:
                 if (ball == null) {
+                    //si es vacio llama al metodo shoot
                     this.ball = this.shuttle.shoot();
                 }
                 this.ball.play();
                 //this.paintBackground();
                 break;
             case P:
+                //prssionado llama al metodo vaciar, que pone el grid a null
+                this.grid.vaciar();
+                //autemnta la fila
                 this.nivel.aumentoFila();
+                //pinta el nuevo background
                 this.paintBackground();
+                this.grid.pintarBurbuja(this.grid.getStartx(), this.grid.getStarty(), this.nivel.nivelUno, this.nivel.getFila());
+
                 break;
             case E:
+                this.grid.vaciar();
+                //decrementa
                 this.nivel.decrementoFila();
+                //muestra el nuevo background
                 this.paintBackground();
+                this.grid.pintarBurbuja(this.grid.getStartx(), this.grid.getStarty(), this.nivel.nivelUno, this.nivel.getFila());
                 break;
             case D:
                 this.setDebug(!this.debug);

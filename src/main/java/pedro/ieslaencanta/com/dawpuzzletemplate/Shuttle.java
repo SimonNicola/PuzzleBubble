@@ -78,7 +78,7 @@ public class Shuttle {
 
     public Point2D getArrowPosition() {
         //dos variables
-        int f, c;
+        int f, c; 
         int posicion;
         Point2D p = null;
         if (this.angle <= 89) {
