@@ -17,7 +17,7 @@ public class BallGrid {
     //sumatorio para despalazar las burbujas
     int sumatorioX = 8;
     int sumatorioY = 8;
-    //esquina top izquierda
+    //esquina top izquierdad
     private int startx;
     //esquina top derecha   
     private int starty;
@@ -42,6 +42,8 @@ public class BallGrid {
     public BallGrid() {
         this.startx = -1;
         this.starty = -1;
+        sumatorioX = -1;
+        sumatorioY = -1;
     }
 
     //constructor sobrecargado
@@ -55,11 +57,11 @@ public class BallGrid {
             //si es par
             if (i % 2 == 0) {
                 //creamos la fila con 9 columnas
-                this.grid[i] = new Bubble[8];
+                this.grid[i] = new Bubble[9];
                 //si es impar
             } else if (i % 2 != 0) {
                 //creamos la fila 8 
-                this.grid[i] = new Bubble[7];
+                this.grid[i] = new Bubble[8];
             }
         }
         //instanciar burbujas, solo hara la primera instancia o primer nivel, luego se llamara a un metodo que lo hara mas o menos igual
@@ -142,16 +144,18 @@ public class BallGrid {
                         if (distancia <= 16) {
                             //colison cierto
                             collision = true;
-                            b.stop();
 
                             //si la fila actual es par
                             if (fila % 2 == 0) {
+                                                            
                                 b.setPosicion(
                                         new Point2D(
                                                 //pocicion cominezo de x, mas la columna actual, multiplicado por el width y añadimos la mitad del bubble para centrar
                                                 this.startx + columna * Bubble.WIDTH + mw,
-                                                this.starty + fila * Bubble.HEIGHT + mh));
+                                                this.starty + fila * Bubble.HEIGHT + mh ));
                             } else {
+                                 
+
                                 //si la fila actual es impar
                                 b.setPosicion(
                                         new Point2D(
@@ -161,6 +165,8 @@ public class BallGrid {
                                                 this.starty + fila * Bubble.HEIGHT + mh));
 
                             }
+                            b.stop();
+
                             //guradamos b 
                             this.grid[fila][columna] = b;
                         }
@@ -216,23 +222,23 @@ public class BallGrid {
             }
         }
     }
+
     //final del juego, no lo he podido testear, ya que no hemos hecho la recursividad
-     public void finalJuego(int fila){
-        int contador=0;
-        for(int i=0;i<grid.length;i++){
-            for(int j=0;j<grid[i].length;j++){
-                if(grid[i][j] != null){
+    public void finalJuego(int fila) {
+        int contador = 0;
+        for (int i = 0; i < grid.length; i++) {
+            for (int j = 0; j < grid[i].length; j++) {
+                if (grid[i][j] != null) {
                     contador++;
                 }
             }
-        }   
-        if(contador == 0 && fila != 10){
+        }
+        if (contador == 0 && fila != 10) {
             System.out.print("Enhorabuena has vencido el nivel " + fila);
-        } else if(contador == 0 && fila == 10){
-            System.out.print("Enhorabuena has Gandado ");
+        } else if (contador == 0 && fila == 10) {
+            System.out.print("Enhorabuena has vencido el nivel final, no hay premio :(, aun");
         }
     }
-            
 
     //debugs balls inside the grid
     /*public String debugTest() {
